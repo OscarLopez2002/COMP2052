@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+{% block title %}Página Principal{% endblock %}
+{% block content %}
+  <div class="row mt-4">
+    <div class="col-md-12">
+      <h1>Bienvenido a Mi Aplicación</h1>
+      <p>Desde aquí puedes ver productos y usuarios destacados.</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      {% include 'partials/_productos_content.html' %}
+    </div>
+    <div class="col-md-6">
+      {% include 'partials/_usuarios_content.html' %}
+    </div>
+  </div>
+{% endblock %}
