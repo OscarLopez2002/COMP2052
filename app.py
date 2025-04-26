@@ -1,26 +1,27 @@
-from flask import Flask, render_template
+from flask import Flask, request, jsonify # type: ignore
 
 app = Flask(__name__)
 
-# Datos de ejemplo
-PRODUCTOS = [
-    {'id': 1, 'nombre': 'Cámara',     'precio': 299},
-    {'id': 2, 'nombre': 'Teléfono',   'precio': 499},
-    {'id': 3, 'nombre': 'Auriculares','precio': 59},
-]
-USUARIOS = ['Ana', 'Luis', 'María', 'Pedro']
+@app.route('/info', methods=['GET'])
+def info():
+    return jsonify({
+        'app': 'Mi Aplicación Flask',
+        'version': '1.0.0',
+        'author': 'OSCAR'
+    })
 
-@app.route('/')
-def inicio():
-    return render_template('index.html')
+@app.route('/mensaje', methods=['POST'])
+def mensaje():
+    data = request.get_json()
+    if not data or 'mensaje' not in data:
+        return jsonify({'error': 'Falta el campo "mensaje" en el JSON'}), 400
+    contenido = data['mensaje']
+    respuesta = f'Recibido: {contenido}'
+    return jsonify({'respuesta': respuesta})
 
-@app.route('/productos')
-def productos():
-    return render_template('productos.html', productos=PRODUCTOS)
-
-@app.route('/usuarios')
-def usuarios():
-    return render_template('usuarios.html', usuarios=USUARIOS)
+@app.route('/', methods=['GET'])
+def home():
+    return jsonify({'msg':'Bienvenido a mi API'})
 
 if __name__ == '__main__':
     app.run(debug=True)
