@@ -1,0 +1,58 @@
+<<<<<<< HEAD
+<!doctype html>
+<html lang="en">
+  <head><meta charset="utf-8"><title>Register</title></head>
+  <body>
+    <h1>Register</h1>
+    <form method="POST">
+      <label>Username: <input type="text" name="username"></label><br>
+      <label>Password: <input type="password" name="password"></label><br>
+      <button type="submit">Register</button>
+    </form>
+    <p><a href="{{ url_for('login') }}">Login</a></p>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        {% for msg in messages %}<p style="color:red;">{{ msg }}</p>{% endfor %}
+      {% endif %}
+    {% endwith %}
+  </body>
+=======
+<!-- HTML document type declaration -->
+<!doctype html>
+<!-- Root HTML element with language set to English -->
+<html lang="en">
+  <!-- Head section containing metadata -->
+  <head>
+    <!-- Character encoding set to UTF-8 -->
+    <meta charset="utf-8">
+    <!-- Title of the HTML document -->
+    <title>Register</title>
+  </head>
+  <!-- Body section containing the visible content of the page -->
+  <body>
+    <!-- Main heading of the registration page -->
+    <h1>Register</h1>
+        <!-- Registration form, submits data via POST method to the current URL (register route) -->
+    <form method="POST">
+            <!-- Label and input field for the username -->
+      <label>Username: <input type="text" name="username"></label><br>
+            <!-- Label and input field for the password -->
+      <label>Password: <input type="password" name="password"></label><br>
+            <!-- Submit button for the form -->
+      <button type="submit">Register</button>
+    </form>
+        <!-- Link to the login page, using url_for to generate the URL for the 'login' route -->
+    <p><a href="{{ url_for('login') }}">Login</a></p>
+        <!-- Jinja2 block to display flashed messages (e.g., error messages from registration process) -->
+    {% with messages = get_flashed_messages() %}
+            <!-- Check if there are any messages to display -->
+      {% if messages %}
+                <!-- Loop through each message and display it in a paragraph with red color -->
+        {% for msg in messages %}<p style="color:red;">{{ msg }}</p>{% endfor %}
+            <!-- End of the if block for messages -->
+      {% endif %}
+        <!-- End of the with block for messages -->
+    {% endwith %}
+    </body>
+>>>>>>> 0176ce9 (Update files and remove nested .git folders)
+</html>
