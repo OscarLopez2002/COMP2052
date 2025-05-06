@@ -1,0 +1,26 @@
+<!-- HTML document type declaration -->
+<!doctype html>
+<!-- Root HTML element with language set to English -->
+<html lang="en">
+  <!-- Head section containing metadata -->
+  <head>
+    <!-- Character encoding set to UTF-8 -->
+    <meta charset="utf-8">
+    <!-- Title of the HTML document -->
+    <title>Home</title>
+  </head>
+  <!-- Body section containing the visible content of the page -->
+  <body>
+    <!-- Main heading of the page -->
+    <h1>Welcome</h1>
+    <!-- Jinja2 template block to check if the current user is authenticated -->
+    {% if current_user.is_authenticated %}
+            <!-- If authenticated, display a personalized greeting, a link to the protected page, and a logout link -->
+      <p>Hello, {{ current_user.username }}! <a href="{{ url_for('protected') }}">Protected</a> | <a href="{{ url_for('logout') }}">Logout</a></p>
+        {% else %}
+      <!-- If not authenticated, display links to the login and register pages -->
+            <p><a href="{{ url_for('login') }}">Login</a> | <a href="{{ url_for('register') }}">Register</a></p>
+        <!-- End of the Jinja2 if block -->
+    {% endif %}
+    </body>
+</html>

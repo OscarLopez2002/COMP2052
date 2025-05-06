@@ -1,0 +1,37 @@
+{
+  "usuarios": [
+    {
+      "id": "string (UUID auto-generado)",
+      "nombre": "string",
+      "correo": "string (formato email)",
+      "pedidos_ids": [
+        "string (UUID referencia a un pedido)"
+      ]
+    }
+  ],
+  "productos": [
+    {
+      "id": "string (UUID auto-generado)",
+      "nombre": "string",
+      "descripcion": "string",
+      "precio": "number (decimal)",
+      "stock": "integer"
+    }
+  ],
+  "pedidos": [
+    {
+      "id": "string (UUID auto-generado)",
+      "usuario_id": "string (UUID referencia a un usuario)",
+      "fecha_pedido": "string (ISO 8601 datetime)",
+      "estado": "string (e.g., 'pendiente', 'enviado', 'entregado', 'cancelado')",
+      "total": "number (decimal)",
+      "lineas_pedido": [
+        {
+          "producto_id": "string (UUID referencia a un producto)",
+          "cantidad": "integer",
+          "precio_unitario": "number (decimal)"
+        }
+      ]
+    }
+  ]
+}

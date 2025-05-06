@@ -1,0 +1,39 @@
+{
+  "usuarios": [
+    {
+      "id": 1,
+      "nombre": "Oscar Lopez",
+      "correo": "oscar@example.com",
+      "direccion": {
+        "calle": "Calle Principal",
+        "ciudad": "Ciudad Ejemplo",
+        "codigo_postal": "12345"
+      },
+      "telefono": "123-456-7890",
+      "rol": "cliente",  
+      "productos_comprados": [101, 102] 
+    }
+  ],
+  "productos": [
+    {
+      "id": 101,
+      "nombre": "Laptop HP",
+      "descripcion": "Laptop HP con procesador Intel Core i5 y 8GB de RAM",
+      "precio": 599.99,
+      "categoria": "Electrónica",
+      "stock": 10,
+      "fecha_creacion": "2025-01-15",
+      "propietario": 1 
+    },
+    {
+      "id": 102,
+      "nombre": "Auriculares Sony",
+      "descripcion": "Auriculares inalámbricos con cancelación de ruido",
+      "precio": 199.99,
+      "categoria": "Accesorios",
+      "stock": 25,
+      "fecha_creacion": "2025-02-10",
+      "propietario": 1
+    }
+  ]
+}
