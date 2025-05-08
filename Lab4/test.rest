@@ -1,0 +1,46 @@
+###
+# test.rest
+# This file contains example HTTP requests to test the Flask application.
+# It uses the VS Code REST Client extension syntax.
+#
+# To use this file:
+# 1. Ensure your Flask application (app.py) is running.
+# 2. Open this file in VS Code.
+# 3. Click on "Send Request" above each request block.
+#
+# Base URL for the local development server
+@baseUrl = http://127.0.0.1:5000
+
+###
+# GET request to the home page
+# This request retrieves the content of the home page (e.g., defined by a route for "/")
+GET {{baseUrl}}/
+
+###
+# POST request to the /register endpoint
+# This is an example of how to send data to a registration form.
+# Replace with the actual fields your /register endpoint expects.
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+    "username": "testuser",
+    "password": "password123",
+    "email": "testuser@example.com"
+}
+
+###
+# Another example: GET request to a hypothetical /users endpoint
+# This would typically retrieve a list of users if such an endpoint exists.
+GET {{baseUrl}}/users
+
+###
+# Example: POST request to a hypothetical /login endpoint
+POST {{baseUrl}}/login
+Content-Type: application/json
+
+{
+    "username": "testuser",
+    "password": "password123"
+}
+
