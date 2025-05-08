@@ -1,0 +1,19 @@
+### Get application info
+# This request retrieves information about the Flask application.
+# It sends a GET request to the /info endpoint.
+GET http://127.0.0.1:5000/info
+
+### Send a message
+# This request sends a JSON payload to the /mensaje endpoint using a POST request.
+# The server is expected to process the message and return a response.
+POST http://127.0.0.1:5000/mensaje
+Content-Type: application/json
+
+{
+    "mensaje": "Hola desde el cliente REST"
+}
+
+### Get welcome message
+# This request retrieves the welcome message from the root (/) endpoint.
+# It sends a GET request.
+GET http://127.0.0.1:5000/

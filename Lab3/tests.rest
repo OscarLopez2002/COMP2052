@@ -1,0 +1,60 @@
+###
+# tests.rest
+# This file contains example HTTP requests to test the web application.
+# You can use a REST client (like the VS Code REST Client extension) to send these requests.
+
+# Change the base URL if your application runs on a different port
+@baseUrl = http://localhost:5000
+
+###
+# 1. Access the Home Page
+# This request should return the home page of the application.
+# It's a simple GET request to the root path.
+GET {{baseUrl}}/
+
+###
+# 2. Register a New User
+# This request attempts to create a new user account.
+# Replace "newuser" and "password123" with desired credentials.
+# The server should respond with a success message or redirect to the login page.
+POST {{baseUrl}}/register
+Content-Type: application/x-www-form-urlencoded
+
+username=newuser&password=password123
+
+###
+# 3. Log In an Existing User
+# This request attempts to log in with an existing user's credentials.
+# Replace "testuser" and "password" with actual credentials you have registered.
+# If successful, the server should set a session cookie.
+POST {{baseUrl}}/login
+Content-Type: application/x-www-form-urlencoded
+
+username=testuser&password=password
+
+###
+# 4. Access a Protected Page (Authenticated)
+# This request attempts to access a protected route after logging in.
+# To make this work, you need to:
+#    A. First, successfully execute the "Log In an Existing User" request above.
+#       Your REST client should automatically handle and send the session cookie.
+#    B. Ensure there is a route like '/protected' that requires authentication.
+# If authentication is successful, you should see the content of the protected page.
+GET {{baseUrl}}/protected
+
+###
+# 5. Access a Protected Page (Unauthenticated)
+# This request attempts to access a protected route without prior authentication.
+# The server should ideally redirect to the login page or return an unauthorized error (e.g., 401 or 403).
+GET {{baseUrl}}/protected
+# Note: If you run this right after a successful login in the same client session,
+# it might still succeed due to the active session cookie.
+# To test unauthenticated access properly, ensure no valid session cookie is sent
+# (e.g., by using a new private/incognito browser window or clearing cookies in your REST client).
+
+###
+# 6. Logout
+# This request attempts to log the user out.
+# If successful, the session should be cleared.
+GET {{baseUrl}}/logout
+

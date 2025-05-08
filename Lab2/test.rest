@@ -1,0 +1,57 @@
+# This is a .rest file, used by REST Client extensions (e.g., in VS Code)
+# to send HTTP requests to a web server. It's great for testing APIs.
+
+# Lines starting with # or ### are comments.
+# ### is often used for a title for the request block.
+
+### Get system info
+# This request retrieves general information about the system.
+# - GET is the HTTP method, used for retrieving data.
+# - http://127.0.0.1:5000/info is the URL of the API endpoint.
+#   - http:// specifies the protocol.
+#   - 127.0.0.1 is the IP address for localhost (your own machine).
+#   - :5000 is the port number the Flask server is listening on.
+#   - /info is the specific path for this endpoint.
+GET http://127.0.0.1:5000/info
+
+### Create a new user
+# This request creates a new user with the provided name and email.
+# - POST is the HTTP method, used for sending data to create a resource.
+# - http://127.0.0.1:5000/crear_usuario is the URL of the API endpoint.
+POST http://127.0.0.1:5000/crear_usuario
+# - Content-Type: application/json is an HTTP header.
+#   It tells the server that the body of this request will be in JSON format.
+Content-Type: application/json
+
+# This is the body of the POST request, formatted as JSON.
+# It contains the data for the new user.
+{
+    "nombre": "John Doe",
+    "correo": "john.doe@example.com"
+}
+
+### Create another new user
+# This request creates another new user, similar to the one above.
+# It demonstrates sending another POST request to the same endpoint
+# but with different data in the JSON body.
+POST http://127.0.0.1:5000/crear_usuario
+Content-Type: application/json
+
+{
+    "nombre": "Jane Doe",
+    "correo": "jane.doe@example.com"
+}
+
+### Get all users
+# This request retrieves a list of all users that have been created.
+# - GET is used as we are fetching data.
+# - http://127.0.0.1:5000/usuarios is the endpoint for getting all users.
+# If you run the POST requests above first, this GET request will show those users.
+GET http://127.0.0.1:5000/usuarios
+
+### Get the main page
+# This request retrieves the main HTML page of the application.
+# - GET is used to fetch the root page.
+# - http://127.0.0.1:5000/ is the base URL of the application.
+# This is what you would typically type into a browser to see the website.
+GET http://127.0.0.1:5000/
