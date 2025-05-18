@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% block content %}
+<div>
+  <h1 class="title">Register Form</h1>
+
+  <form method="POST" action="/register" class="process-form">
+    <input
+      type="text"
+      name="username"
+      id="username"
+      placeholder="Your email here"
+    />
+
+    {% if error %}
+    <p style="color: red">{{ error }}</p>
+    {% endif %}
+
+    <button type="submit" class="btn btn-add">Register</button>
+
+    {% endblock %}
+  </form>
+</div>

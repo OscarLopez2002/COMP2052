@@ -1,0 +1,38 @@
+{% extends "base.html" %} {% block content %}
+<div class="todo-container">
+  <h1 class="title">TO DO List</h1>
+
+  <!-- Formulario para agregar tarea -->
+  <form id="addTaskForm" class="add-task-form">
+    <input
+      type="text"
+      id="todo"
+      name="todo"
+      placeholder="Enter a task"
+      required
+    />
+    <button type="submit" class="btn btn-add">Add Task</button>
+  </form>
+
+  <!-- Lista de tareas -->
+  <ul class="task-list">
+    {% for todo in data.todos %}
+    <li class="task-item" id="{{ todo }}">
+      <span>{{ todo }}</span>
+      <div class="task-actions">
+        <button class="btn btn-edit" onclick="editTask('{{ todo }}')">
+          Edit
+        </button>
+        <button class="btn btn-delete" onclick="deleteTask('{{ todo }}')">
+          Delete
+        </button>
+      </div>
+    </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<!-- Incluir el archivo JS -->
+<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+
+{% endblock %}

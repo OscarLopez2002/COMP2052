@@ -1,0 +1,24 @@
+{% extends "layout.html" %}
+{% block title %}{{ title or (editar and "Editar Encuesta" or "Nueva Encuesta") }}{% endblock %}
+{% block content %}
+<h2 class="mb-4">{{ title or (editar and "Editar Encuesta" or "Nueva Encuesta") }}</h2>
+
+<form method="POST" novalidate>
+  {{ form.hidden_tag() }}
+
+  <!-- Survey Title -->
+  <div class="mb-3">
+    {{ form.titulo.label(class="form-label") }}
+    {{ form.titulo(class="form-control", placeholder="Ingrese el título de la encuesta") }}
+  </div>
+
+  <!-- Survey Description -->
+  <div class="mb-3">
+    {{ form.descripcion.label(class="form-label") }}
+    {{ form.descripcion(class="form-control", placeholder="Ingrese la descripción de la encuesta") }}
+  </div>
+
+  <!-- Submit Button -->
+  <div class="mb-3">{{ form.submit(class="btn btn-primary") }}</div>
+</form>
+{% endblock %}

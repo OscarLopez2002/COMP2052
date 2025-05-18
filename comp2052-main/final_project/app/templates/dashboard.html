@@ -1,0 +1,78 @@
+{% extends "layout.html" %} {% block title %}Dashboard{% endblock %} {% block
+content %}
+<div class="row">
+  <div class="col">
+    <h3>Gestión de Encuestas</h3>
+  </div>
+  <div class="col text-end">
+    <!-- Change the next line for your project -->
+    {% if current_user_role in ['Admin', 'Moderador'] %}
+    <a class="btn btn-primary mb-3 me-2" href="{{ url_for('main.encuestas') }}">
+      <i class="bi bi-plus"></i> Nueva Encuesta
+    </a>
+    {% endif %}
+  </div>
+</div>
+
+<table class="table table-bordered table-hover">
+  <thead class="table-light">
+    <tr>
+      <th>Título</th>
+      <th>Descripción</th>
+      <th>Creador</th>
+      <th class="text-center">Acciones</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for encuesta in encuestas %}
+    <tr>
+      <td>{{ encuesta.titulo }}</td>
+      <td>{{ encuesta.descripcion }}</td>
+      <td>{{ encuesta.creador.username }}</td>
+      <td class="text-center ps-0 pe-0">
+        {# Permissions for Edit/Delete buttons #}
+        {% if current_user_role == 'Admin' or (current_user_role == 'Moderador' and encuesta.creador_id == current_user.id) %}
+        <a
+          class="btn btn-sm btn-warning"
+          href="{{ url_for('main.editar_encuesta', id=encuesta.id) }}"
+          title="Editar Encuesta"
+        >
+          <i class="bi bi-pencil"></i>
+        </a>
+        <form
+          method="POST"
+          action="{{ url_for('main.eliminar_encuesta', id=encuesta.id) }}"
+          style="display: inline"
+          onsubmit="return confirm('¿Estás seguro de que quieres eliminar esta encuesta?');"
+        >
+          <button
+            type="submit"
+            class="btn btn-sm btn-danger"
+            title="Eliminar Encuesta"
+          >
+            <i class="bi bi-trash"></i>
+          </button>
+        </form>
+        {% else %}
+        <span class="text-muted" title="No tienes permisos para editar/eliminar"><i class="bi bi-lock"></i></span>
+        {% endif %}
+      </td>
+    </tr>
+    {% else %}
+    <tr>
+      <td colspan="4" class="text-center">No hay encuestas para mostrar.</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+<!-- Change the next line for your project -->
+{% if encuestas is defined and not encuestas and (current_user_role in ['Admin', 'Moderador']) %}
+<p class="text-center pe-3 mt-3 text-body-tertiary fw-lighter">
+  No has creado ninguna encuesta todavía. ¡Crea una!
+</p>
+{% elif current_user_role == 'Votante' %}
+<p class="text-center pe-3 mt-3 text-body-tertiary fw-lighter fst-italic">
+  Como Votante, puedes ver y participar en encuestas. La creación y gestión la realizan Moderadores o Administradores.
+</p>
+{% endif %} {% endblock %}

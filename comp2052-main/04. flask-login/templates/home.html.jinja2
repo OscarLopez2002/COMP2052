@@ -1,0 +1,15 @@
+{% extends "base.html" %} 
+
+{% block title %}
+    Home Page
+{% endblock %}
+
+{% block content %}
+  <form method="GET" action="/login" class="process-form">
+
+    <h2 class="title">Welcome, {{ nombre }}!</h2>
+    <p class="message">Your have an authenticated session!</p>
+    <a href="{{ url_for('logout') }}" class="btn btn-secondary">Logout</a>
+    
+  </form>
+{% endblock %}
