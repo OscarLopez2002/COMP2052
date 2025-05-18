@@ -1,0 +1,15 @@
+<h2>Productos Destacados</h2>
+<table class="table table-striped">
+  <thead>
+    <tr><th>ID</th><th>Nombre</th><th>Precio ($)</th></tr>
+  </thead>
+  <tbody>
+    {% for p in productos %}
+    <tr>
+      <td>{{ p.id }}</td>
+      <td>{{ p.nombre }}</td>
+      <td>{{ p.precio }}</td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>

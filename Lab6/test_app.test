@@ -1,0 +1,124 @@
+# REST Client Test File for Flask App
+# This file contains requests to test the authentication and authorization
+# of the Flask application defined in app.py.
+# Make sure your Flask app (app.py) is running before sending these requests.
+
+###
+# Variables
+# Define the base URL for your running application
+@baseUrl = http://127.0.0.1:5000
+
+###
+# ======================================================================
+# ANONYMOUS USER TESTS (No user logged in)
+# ======================================================================
+
+### Test (Anonymous): Access Home page (/)
+# Description: Check if the home page is accessible to anonymous users.
+# Expected: HTTP 200 OK. Response should contain "Welcome" and a "Login" link.
+GET {{baseUrl}}/
+
+### Test (Anonymous): Access /admin
+# Description: Attempt to access the admin page as an anonymous user.
+# Expected: HTTP 302 Found (redirect to /login) because of @login_required.
+#           The REST client might follow redirects and show the login page (200 OK).
+GET {{baseUrl}}/admin
+
+### Test (Anonymous): Access /editor
+# Description: Attempt to access the editor page as an anonymous user.
+# Expected: HTTP 302 Found (redirect to /login).
+GET {{baseUrl}}/editor
+
+### Test (Anonymous): Access /shared
+# Description: Attempt to access the shared page as an anonymous user.
+# Expected: HTTP 302 Found (redirect to /login).
+GET {{baseUrl}}/shared
+
+###
+# ======================================================================
+# ALICE (ADMIN ROLE) TESTS
+# ======================================================================
+
+### Test (Alice): Login as admin user 'alice'
+# Description: Log in with alice's credentials.
+# Expected: HTTP 200 OK (after redirect from /login). Response should indicate successful login (e.g., welcome message for alice).
+#           A session cookie should be set by the server.
+POST {{baseUrl}}/login
+Content-Type: application/x-www-form-urlencoded
+
+username=alice&password=123
+
+### Test (Alice): Access Home page (/) after login
+# Description: Verify home page content for a logged-in admin.
+# Expected: HTTP 200 OK. Response should show "Hello alice", her roles, and a "Logout" link.
+GET {{baseUrl}}/
+
+### Test (Alice): Access /admin as admin
+# Description: Access the admin page as the logged-in admin user 'alice'.
+# Expected: HTTP 200 OK. Response should contain "Admin Zone".
+GET {{baseUrl}}/admin
+
+### Test (Alice): Access /editor as admin
+# Description: Attempt to access the editor page as 'alice'.
+# Expected: HTTP 403 Forbidden. Alice has 'admin' role, not 'editor' role by default.
+GET {{baseUrl}}/editor
+
+### Test (Alice): Access /shared as admin
+# Description: Access the shared page as 'alice'.
+# Expected: HTTP 200 OK. Response should contain "Page accessible to any logged-in user".
+GET {{baseUrl}}/shared
+
+### Test (Alice): Logout
+# Description: Log out alice.
+# Expected: HTTP 200 OK (after redirect). Session should be cleared.
+GET {{baseUrl}}/logout
+
+### Test (Alice): Access /admin after logout
+# Description: Attempt to access admin page after alice has logged out.
+# Expected: HTTP 302 Found (redirect to /login).
+GET {{baseUrl}}/admin
+
+###
+# ======================================================================
+# BOB (EDITOR ROLE) TESTS
+# ======================================================================
+
+### Test (Bob): Login as editor user 'bob'
+# Description: Log in with bob's credentials.
+# Expected: HTTP 200 OK (after redirect). Response should indicate successful login.
+#           A session cookie should be set.
+POST {{baseUrl}}/login
+Content-Type: application/x-www-form-urlencoded
+
+username=bob&password=456
+
+### Test (Bob): Access Home page (/) after login
+# Description: Verify home page content for a logged-in editor.
+# Expected: HTTP 200 OK. Response should show "Hello bob", his roles, and a "Logout" link.
+GET {{baseUrl}}/
+
+### Test (Bob): Access /admin as editor
+# Description: Attempt to access the admin page as the logged-in editor user 'bob'.
+# Expected: HTTP 403 Forbidden. Bob does not have admin privileges.
+GET {{baseUrl}}/admin
+
+### Test (Bob): Access /editor as editor
+# Description: Access the editor page as 'bob'.
+# Expected: HTTP 200 OK. Response should contain "Editor Zone".
+GET {{baseUrl}}/editor
+
+### Test (Bob): Access /shared as editor
+# Description: Access the shared page as 'bob'.
+# Expected: HTTP 200 OK. Response should contain "Page accessible to any logged-in user".
+GET {{baseUrl}}/shared
+
+### Test (Bob): Logout
+# Description: Log out bob.
+# Expected: HTTP 200 OK (after redirect). Session should be cleared.
+GET {{baseUrl}}/logout
+
+### Test (Bob): Access /editor after logout
+# Description: Attempt to access editor page after bob has logged out.
+# Expected: HTTP 302 Found (redirect to /login).
+GET {{baseUrl}}/editor
+

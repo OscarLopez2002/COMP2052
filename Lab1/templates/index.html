@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flask Web App</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background-color: #f0f2f5; color: #333; display: flex; flex-direction: column; align-items: center; }
+        .container { background-color: #fff; padding: 30px; border-radius: 10px; box-shadow: 0 4px 8px rgba(0,0,0,0.1); width: 90%; max-width: 600px; margin-bottom: 20px; }
+        h1 { color: #007bff; text-align: center; margin-bottom: 20px; }
+        nav { margin-bottom: 20px; text-align: center; }
+        nav a { margin: 0 15px; text-decoration: none; color: #007bff; font-weight: bold; padding: 8px 12px; border-radius: 5px; transition: background-color 0.3s, color 0.3s; }
+        nav a:hover { background-color: #007bff; color: #fff; }
+        label { display: block; margin-bottom: 8px; font-weight: bold; color: #555; }
+        input[type="text"], textarea { width: calc(100% - 22px); padding: 10px; margin-bottom: 20px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
+        button { background-color: #28a745; color: white; padding: 12px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; transition: background-color 0.3s; }
+        button:hover { background-color: #218838; }
+        #responseArea { margin-top: 20px; padding: 15px; background-color: #e9ecef; border: 1px solid #ced4da; border-radius: 5px; }
+        #responseArea h3 { margin-top: 0; color: #007bff; }
+        #errorMessage { color: red; margin-top: 10px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Welcome to My Flask App</h1>
+        <nav>
+            <a href="/">Home</a>
+            <a href="/info">App Info</a>
+        </nav>
+
+        <h2>Send a Message</h2>
+        <form id="messageForm">
+            <div>
+                <label for="message">Message:</label>
+                <textarea id="message" name="message" rows="4" required></textarea>
+            </div>
+            <button type="submit">Send Message</button>
+        </form>
+        <div id="responseArea" style="display:none;">
+            <h3>Server Response:</h3>
+            <pre id="responseText"></pre>
+        </div>
+        <div id="errorMessage" style="display:none;"></div>
+    </div>
+
+    <script>
+        document.getElementById('messageForm').addEventListener('submit', async function(event) {
+            event.preventDefault();
+            const message = document.getElementById('message').value;
+            const responseArea = document.getElementById('responseArea');
+            const responseText = document.getElementById('responseText');
+            const errorMessage = document.getElementById('errorMessage');
+
+            responseArea.style.display = 'none';
+            errorMessage.style.display = 'none';
+
+            try {
+                const response = await fetch('/mensaje', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ mensaje: message })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    responseText.textContent = JSON.stringify(data, null, 2);
+                    responseArea.style.display = 'block';
+                } else {
+                    errorMessage.textContent = 'Error: ' + (data.error || 'Failed to send message');
+                    errorMessage.style.display = 'block';
+                }
+            } catch (error) {
+                errorMessage.textContent = 'Network error: ' + error.message;
+                errorMessage.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
